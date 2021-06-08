@@ -1,5 +1,5 @@
 from collections import Counter
-from imblearn.over_sampling import ADASYN
+from imblearn.over_sampling import ADASYN, RandomOverSampler
 import csv
 import numpy as np
 import pandas as pd
@@ -39,7 +39,9 @@ def write_data(x, y):
         row.append(int(y[i]))
         rows.append(dict(zip(headers, row)))
 
-    filename = "data/ICDS_Oversampled_Dataset.csv"
+    # filename = "data/ICDS_Oversampled_Dataset.csv"
+    filename = "data/ICDS_ROS_Oversampled_Dataset.csv"
+
     with open(filename, 'w') as csvfile:
         csvwriter = csv.DictWriter(csvfile, fieldnames=headers)
         csvwriter.writeheader()
@@ -56,15 +58,19 @@ def oversample_data():
     # X_resampled, y_resampled = smote_nc.fit_resample(x, y)
     # print(sorted(Counter(y_resampled).items()))
 
-    x_resampled, y_resampled = ADASYN().fit_resample(x, y)
+    # x_resampled, y_resampled = ADASYN().fit_resample(x, y)
+    # print(sorted(Counter(y_resampled).items()))
+
+    ros = RandomOverSampler()
+    x_resampled, y_resampled = ros.fit_resample(x, y)
     print(sorted(Counter(y_resampled).items()))
 
     write_data(x_resampled, y_resampled)
 
 
-# preprocessing("Data/train_data.csv")
+# preprocessing("data/train_data.csv")
 oversample_data()
 
-# data = pd.read_csv('Data/ICDS_Oversampled_Dataset.csv')
+# data = pd.read_csv('data/ICDS_Oversampled_Dataset.csv')
 # sns.countplot(x="app_status", data=data)
 # plt.show()
