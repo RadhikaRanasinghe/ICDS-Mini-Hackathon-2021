@@ -70,7 +70,3 @@ def oversample_data():
 
 # preprocessing("data/train_data.csv")
 oversample_data()
-
-# data = pd.read_csv('data/ICDS_Oversampled_Dataset.csv')
-# sns.countplot(x="app_status", data=data)
-# plt.show()
