@@ -35,11 +35,7 @@ def preprocessing(dataset):
                          1, 2, 3])  # health
 
     print(new_df)
-
-    # plot graph
-    sns.countplot(x="app_status", data=data)
-    plt.show()
-
+    
     # change the file to anything if needed :)
     new_df.to_csv("data/ICDS_Numeric_Dataset.csv", index=False)
 
