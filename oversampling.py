@@ -1,13 +1,8 @@
-from collections import Counter
-from imblearn.over_sampling import ADASYN, RandomOverSampler
 import csv
-import numpy as np
+from collections import Counter
+
 import pandas as pd
-import sklearn
-import pickle
-import sklearn.preprocessing
-import seaborn as sns
-import matplotlib.pyplot as plt
+from imblearn.over_sampling import RandomOverSampler
 
 
 def preprocessing_columns(data):
@@ -31,7 +26,7 @@ def preprocessing_columns(data):
 
 
 def write_data(x, y):
-    headers = ['parents', 'has_nurs', 'form', 'children', 'housing','finance', 'social', 'health', 'app_status']
+    headers = ['parents', 'has_nurs', 'form', 'children', 'housing', 'finance', 'social', 'health', 'app_status']
     rows = []
 
     for i in range(len(x)):

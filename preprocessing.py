@@ -1,11 +1,4 @@
-import csv
-import numpy as np
 import pandas as pd
-import sklearn
-import pickle
-import sklearn.preprocessing
-import seaborn as sns
-import matplotlib.pyplot as plt
 
 
 def preprocessing(dataset):
@@ -18,24 +11,24 @@ def preprocessing(dataset):
 
     # replace the strings with integers in dataframe
     new_df = df.replace(["usual", "pretentious", "great_pret",  # parents
-                         "less_proper", "very_crit", "proper", "improper",  # has_nurs
-                         "complete", "incomplete", "completed", "foster",  # form
+                         "less_proper", "improper", "proper", "critical", "very_crit",  # has_nurs
+                         "foster", "incomplete", "complete", "completed",  # form
                          "more",  # children
-                         "convenient", "critical", "less_conv",  # housing
-                         "inconv",  # finance
-                         "problematic", "nonprob", "slightly_prob",  # social
-                         "not_recom", "priority", "recommended"],  # health
+                         "less_conv", "convenient", "critical",   # housing
+                         "convenient", "inconv",  # finance
+                         "nonprob", "slightly_prob", "problematic",  # social
+                         "not_recom", "recommended", "priority"],  # health
                         [1, 2, 3,  # parents
-                         1, 2, 3, 4,  # has_nurs
+                         1, 2, 3, 4, 5,  # has_nurs
                          1, 2, 3, 4,  # form
                          4,  # children
                          1, 2, 3,  # housing
-                         2,  # finance
+                         1, 2,  # finance
                          1, 2, 3,  # social
                          1, 2, 3])  # health
 
     print(new_df)
-    
+
     # change the file to anything if needed :)
     new_df.to_csv("data/ICDS_Numeric_Dataset.csv", index=False)
 
