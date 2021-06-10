@@ -1,13 +1,8 @@
-from collections import Counter
-from imblearn.over_sampling import ADASYN, RandomOverSampler
 import csv
-import numpy as np
+from collections import Counter
+
 import pandas as pd
-import sklearn
-import pickle
-import sklearn.preprocessing
-import seaborn as sns
-import matplotlib.pyplot as plt
+from imblearn.over_sampling import RandomOverSampler, ADASYN
 
 
 def preprocessing_columns(data):
@@ -31,7 +26,7 @@ def preprocessing_columns(data):
 
 
 def write_data(x, y):
-    headers = ['parents', 'has_nurs', 'form', 'children', 'housing','finance', 'social', 'health', 'app_status']
+    headers = ['parents', 'has_nurs', 'form', 'children', 'housing', 'finance', 'social', 'health', 'app_status']
     rows = []
 
     for i in range(len(x)):
@@ -40,7 +35,8 @@ def write_data(x, y):
         rows.append(dict(zip(headers, row)))
 
     # filename = "data/ICDS_Oversampled_Dataset.csv"
-    filename = "data/ICDS_ROS_Oversampled_Dataset.csv"
+    # filename = "data/ICDS_ROS_Oversampled_Dataset.csv"
+    filename = "data/ICDS_ADASYN_Oversampled_Dataset.csv"
 
     with open(filename, 'w') as csvfile:
         csvwriter = csv.DictWriter(csvfile, fieldnames=headers)
@@ -58,12 +54,12 @@ def oversample_data():
     # X_resampled, y_resampled = smote_nc.fit_resample(x, y)
     # print(sorted(Counter(y_resampled).items()))
 
-    # x_resampled, y_resampled = ADASYN().fit_resample(x, y)
-    # print(sorted(Counter(y_resampled).items()))
-
-    ros = RandomOverSampler()
-    x_resampled, y_resampled = ros.fit_resample(x, y)
+    x_resampled, y_resampled = ADASYN().fit_resample(x, y)
     print(sorted(Counter(y_resampled).items()))
+
+    # ros = RandomOverSampler()
+    # x_resampled, y_resampled = ros.fit_resample(x, y)
+    # print(sorted(Counter(y_resampled).items()))
 
     write_data(x_resampled, y_resampled)
 
