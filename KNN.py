@@ -1,10 +1,13 @@
 import pickle
 
 import matplotlib.pyplot as plt
+import pandas as pd
 import sklearn
 import sklearn.metrics as metrics
 from sklearn.metrics import plot_confusion_matrix, accuracy_score
 from sklearn.neighbors import KNeighborsClassifier
+
+import oversampling
 
 
 def initialise_save(x, y, dataset_type):
@@ -185,12 +188,12 @@ def run_KNN(dataset_type):
     :return: void
     """
 
-    # data = pd.read_csv(f"data/ICDS_{dataset_type}_Oversampled_Dataset.csv")
-    # x, y = oversampling.preprocessing_columns(data)
+    data = pd.read_csv(f"data/ICDS_{dataset_type}_Oversampled_Dataset.csv")
+    x, y = oversampling.preprocessing_columns(data)
     # initialise_save(x, y, dataset_type)
-    # building_models(x, y, dataset_type)
+    building_models(x, y, dataset_type)
     print_results(dataset_type)
-    # plot_graphs(dataset_type)
+    plot_graphs(dataset_type)
 
 
 run_KNN('ROS')
