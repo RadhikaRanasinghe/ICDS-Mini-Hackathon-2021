@@ -57,7 +57,7 @@ def naive_bayes():
                 with open("models/naive bayes/NB_BestModel_%s.pickle" % high_count, "wb") as bestModel:
                     pickle.dump(highest_model, bestModel)
 
-                file = open("notebooks/NB_BestModels.txt", "a")
+                file = open("notebooks/NB_results.txt", "a")
                 file.write(metrics.classification_report(y_test, predicted))
                 file.close()
 
