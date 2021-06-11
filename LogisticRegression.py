@@ -44,12 +44,12 @@ def logisticRegression():
             if accuracy > highestAccuracy:
                 highestAccuracy = accuracy
                 print("changed")
-                file = open("log.txt", "a")
+                file = open("notebooks/ logistic regression log.txt", "a")
                 file.write("Highest accuracy : " + str(highestAccuracy) + "\n")
                 # if the current model accuracy is higher than the 2nd highest accuracy
                 highModel = model
                 file.close()
-                classificationreportFile = open("classification report.txt", "w")
+                classificationreportFile = open("notebooks/logistic regression classification report.txt", "w")
                 classificationreportFile.write(classification_report(y_test, predictions))
         print("success")
 
