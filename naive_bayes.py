@@ -41,7 +41,7 @@ def naive_bayes():
                 print(metrics.classification_report(y_test, predicted))
                 print(metrics.confusion_matrix(y_test, predicted))
 
-                file = open("models/naive bayes/NB_WorstModels.txt", "a")
+                file = open("notebooks/NB_WorstModels.txt", "a")
                 file.write(metrics.classification_report(y_test, predicted))
                 file.close()
 
@@ -57,7 +57,7 @@ def naive_bayes():
                 with open("models/naive bayes/NB_BestModel_%s.pickle" % high_count, "wb") as bestModel:
                     pickle.dump(highest_model, bestModel)
 
-                file = open("models/naive bayes/NB_BestModels.txt", "a")
+                file = open("notebooks/NB_BestModels.txt", "a")
                 file.write(metrics.classification_report(y_test, predicted))
                 file.close()
 
