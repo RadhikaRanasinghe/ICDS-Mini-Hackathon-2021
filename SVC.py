@@ -4,7 +4,6 @@ import pickle
 
 import numpy as np
 import pandas as pd
-from sklearn import metrics
 from sklearn.model_selection import train_test_split
 from sklearn.svm import SVC
 
@@ -25,12 +24,10 @@ def run_svc():
 
 def highest_accuracy_save(x, y):
     for _ in range(10000):
-        if _ % 100 == 0:
-            print("iteration:", _)
         # Splitting the data into testing data and training data with the testing size of 0.3
         x_train, x_test, y_train, y_test = train_test_split(x, y, test_size=0.3)
 
-        # The Random Forest Classifier Model is assigned to the model variable
+        # The SVC Model is assigned to the model variable
         model = SVC(kernel='linear')
 
         # The training data from the data split is taken for fitting into the model to train
