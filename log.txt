@@ -1,3 +1,0 @@
-Highest accuracy : 77.7445855115758
-Highest accuracy : 80.134428678118
-Highest accuracy : 81.40403286034355
