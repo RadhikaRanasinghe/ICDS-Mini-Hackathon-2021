@@ -8,7 +8,7 @@ import seaborn as sns
 import matplotlib.pyplot as plt
 from sklearn.model_selection import train_test_split
 from sklearn.linear_model import LogisticRegression
-from sklearn.metrics import accuracy_score
+from sklearn.metrics import accuracy_score, classification_report
 
 
 def logisticRegression():
@@ -49,6 +49,8 @@ def logisticRegression():
                 # if the current model accuracy is higher than the 2nd highest accuracy
                 highModel = model
                 file.close()
+                classificationreportFile = open("classification report.txt", "w")
+                classificationreportFile.write(classification_report(y_test, predictions))
         print("success")
 
     # saving the models as pickle files
