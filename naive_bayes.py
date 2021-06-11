@@ -56,7 +56,7 @@ def naive_bayes():
                 print(metrics.confusion_matrix(y_test, predicted))
 
                 # Saving models as pickle files
-                with open("models/naive bayes/NB_BestModel_%s.pickle" % high_count, "wb") as bestModel:
+                with open("models/naives_bayes/NB_BestModel_%s.pickle" % high_count, "wb") as bestModel:
                     pickle.dump(highest_model, bestModel)
 
                 file = open("notebooks/NB_results.txt", "a")
@@ -64,7 +64,7 @@ def naive_bayes():
                 file.close()
 
     # Saving models as pickle files
-    with open("models/naive bayes/NB_WorstModel.pickle", "wb") as worstModel:
+    with open("models/naives_bayes/NB_WorstModel.pickle", "wb") as worstModel:
         pickle.dump(lowest_model, worstModel)
 
 
@@ -74,7 +74,7 @@ def nb_confusion_matrix(dataset):
     x_train, x_test, y_train, y_test = train_test_split(x, y, test_size=0.1, random_state=None)
 
     # Loading models from pickle files
-    pickle_in = open('models/naive bayes/NB_BestModel_1.pickle', "rb")
+    pickle_in = open('models/naives_bayes/NB_BestModel_1.pickle', "rb")
     loaded_model = pickle.load(pickle_in)
 
     # make prediction using loaded model
@@ -99,7 +99,7 @@ def nb_roc_curve(dataset):
     x_train, x_test, y_train, y_test = train_test_split(x, y, test_size=0.2, random_state=None)
 
     # Loading models from pickle files
-    pickle_in = open('models/naive bayes/NB_BestModel_1.pickle', "rb")
+    pickle_in = open('models/naives_bayes/NB_BestModel_1.pickle', "rb")
     loaded_model = pickle.load(pickle_in)
 
     # plot roc curve
