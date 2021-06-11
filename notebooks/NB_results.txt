@@ -1,0 +1,51 @@
+
+-------------------- Best models ----------------------
+
+Accuracy = 83.65847381234534
+
+              precision    recall  f1-score   support
+
+           0       0.86      0.81      0.83       663
+           1       0.83      0.87      0.85       676
+
+    accuracy                           0.84      1339
+   macro avg       0.84      0.84      0.84      1339
+weighted avg       0.84      0.84      0.84      1339
+
+
+Accuracy = 85.12447351234534
+
+              precision    recall  f1-score   support
+
+           0       0.86      0.83      0.85       685
+           1       0.83      0.86      0.85       654
+
+    accuracy                           0.85      1339
+   macro avg       0.85      0.85      0.85      1339
+weighted avg       0.85      0.85      0.85      1339
+
+
+Accuracy = 86.13337351534534
+
+              precision    recall  f1-score   support
+
+           0       0.89      0.82      0.85       673
+           1       0.83      0.89      0.86       666
+
+    accuracy                           0.86      1339
+   macro avg       0.86      0.86      0.85      1339
+weighted avg       0.86      0.86      0.85      1339
+
+
+------------------- Worst model ----------------------
+
+Accuracy = 80.61537351534534
+
+              precision    recall  f1-score   support
+
+           0       0.84      0.77      0.81       693
+           1       0.78      0.85      0.81       646
+
+    accuracy                           0.81      1339
+   macro avg       0.81      0.81      0.81      1339
+weighted avg       0.81      0.81      0.81      1339
