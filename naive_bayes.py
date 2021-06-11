@@ -1,6 +1,8 @@
 import pandas as pd
 import pickle
+from matplotlib import pyplot as plt
 from sklearn import metrics
+from sklearn.metrics import plot_confusion_matrix
 from sklearn.model_selection import train_test_split
 from sklearn.naive_bayes import BernoulliNB, GaussianNB
 from oversampling import preprocessing_columns
@@ -66,4 +68,45 @@ def naive_bayes():
         pickle.dump(lowest_model, worstModel)
 
 
-naive_bayes()
+def nb_confusion_matrix(dataset):
+    data = pd.read_csv(f"data/ICDS_{dataset}_Oversampled_Dataset.csv")
+    x, y = preprocessing_columns(data)
+    x_train, x_test, y_train, y_test = train_test_split(x, y, test_size=0.1, random_state=None)
+
+    # Loading models from pickle files
+    pickle_in = open('models/naive bayes/NB_BestModel_1.pickle', "rb")
+    loaded_model = pickle.load(pickle_in)
+
+    # make prediction using loaded model
+    new_pred = loaded_model.predict(x_test)
+    new_score = metrics.accuracy_score(y_test, new_pred)
+
+    # plot non-normalized confusion matrix
+    options = [("Confusion matrix, without normalization", None),
+               ("Normalized confusion matrix", 'true')]
+    for title, normalize in options:
+        plot = plot_confusion_matrix(loaded_model, x_test, y_test, cmap=plt.cm.Blues, normalize=normalize)
+        plot.ax_.set_title(title)
+        print(plot.confusion_matrix)
+
+    plt.show()
+    print(new_score * 100)
+
+
+def nb_roc_curve(dataset):
+    data = pd.read_csv(f"data/ICDS_{dataset}_Oversampled_Dataset.csv")
+    x, y = preprocessing_columns(data)
+    x_train, x_test, y_train, y_test = train_test_split(x, y, test_size=0.2, random_state=None)
+
+    # Loading models from pickle files
+    pickle_in = open('models/naive bayes/NB_BestModel_1.pickle', "rb")
+    loaded_model = pickle.load(pickle_in)
+
+    # plot roc curve
+    metrics.plot_roc_curve(loaded_model, x_test, y_test)
+    plt.show()
+
+
+# naive_bayes()
+# nb_confusion_matrix('ROS')
+nb_roc_curve('ROS')
