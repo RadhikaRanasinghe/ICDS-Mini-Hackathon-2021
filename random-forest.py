@@ -6,7 +6,9 @@ import numpy as np
 import pandas as pd
 from sklearn import metrics
 from sklearn.ensemble import RandomForestClassifier
+from sklearn.metrics import classification_report, plot_confusion_matrix
 from sklearn.model_selection import train_test_split
+import matplotlib.pyplot as plt
 
 
 def run_random_forest():
@@ -61,4 +63,37 @@ def highest_accuracy_save(x, y):
                 "wb"))
 
 
-run_random_forest()
+def writing():
+    loaded_best_data = pickle.load(
+        open(
+            "models/Random_Forest/Random_Forest_Best_Data.pickle",
+            "rb"))
+    loaded_best_model = pickle.load(
+        open(
+            "models/Random_Forest/Random_Forest_Best_Model.pickle",
+            "rb"))
+
+    # Running predictions using  test data
+    predictions = loaded_best_model.predict(loaded_best_data['x_test'])
+
+    # Writing the classification report
+    text = classification_report(loaded_best_data['y_test'], predictions)
+    print(text)
+
+    file = open("notebooks/Random_Forest_Classification_Report.txt", "w")
+    file.write(text)
+    file.close()
+
+    # Creating confusion matrix
+    labels = ['negative', 'positive']
+
+    titles_options = [("Confusion matrix, without normalization", None),
+                      ("Normalized confusion matrix", 'true')]
+    for title, normalize in titles_options:
+        disp = plot_confusion_matrix(loaded_best_model, loaded_best_data['x_test'], loaded_best_data['y_test'],
+                                     display_labels=labels, cmap=plt.cm.Blues, normalize=normalize)
+        disp.ax_.set_title(title)
+        plt.savefig(f"plots/{title}.png".replace(" ", "_").replace(",", ""))
+
+
+writing()
