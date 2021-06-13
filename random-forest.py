@@ -60,14 +60,8 @@ def highest_accuracy_save(x, y):
         acc = model.score(x_test, y_test)
 
         # Loading bestModel and bestData.
-        loaded_best_data = pickle.load(
-            open(
-                "models/Random_Forest/Random_Forest_Best_Data.pickle",
-                "rb"))
-        loaded_best_model = pickle.load(
-            open(
-                "models/Random_Forest/Random_Forest_Best_Model.pickle",
-                "rb"))
+        loaded_best_data = pickle.load(open("models/Random_Forest/Random_Forest_Best_Data.pickle", "rb"))
+        loaded_best_model = pickle.load(open("models/Random_Forest/Random_Forest_Best_Model.pickle", "rb"))
         best_acc = loaded_best_model.score(loaded_best_data['x_test'], loaded_best_data['y_test'])
 
         # Updating bestData and bestModel if the new accuracy is better.
