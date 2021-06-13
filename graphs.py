@@ -4,12 +4,12 @@ from matplotlib import pyplot as plt
 
 
 def plot_pairplot(dataset_type):
-    data = pd.read_csv(f"data/ICDS_{dataset_type}_Dataset.csv")
+    data = pd.read_csv(f"data/CRAP_{dataset_type}_Dataset.csv")
     p = sns.pairplot(data, hue='app_status')
     p.savefig(f"plots/pairplot_{dataset_type}.png")
 
 
 def count_plot(dataset_type):
-    data = pd.read_csv(f"data/ICDS_{dataset_type}_Oversampled_Dataset.csv")
+    data = pd.read_csv(f"data/CRAP_{dataset_type}_Oversampled_Dataset.csv")
     sns.countplot(x="app_status", data=data)
     plt.show()

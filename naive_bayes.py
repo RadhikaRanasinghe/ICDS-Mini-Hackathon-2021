@@ -9,7 +9,7 @@ from oversampling import preprocessing_columns
 
 
 def naive_bayes():
-    data = pd.read_csv('data/ICDS_ROS_Oversampled_Dataset.csv')
+    data = pd.read_csv('data/CRAP_ROS_Oversampled_Dataset.csv')
     x, y = preprocessing_columns(data)
 
     # Naive Bayes Classifier
@@ -69,7 +69,7 @@ def naive_bayes():
 
 
 def nb_confusion_matrix(dataset):
-    data = pd.read_csv(f"data/ICDS_{dataset}_Oversampled_Dataset.csv")
+    data = pd.read_csv(f"data/CRAP_{dataset}_Oversampled_Dataset.csv")
     x, y = preprocessing_columns(data)
     x_train, x_test, y_train, y_test = train_test_split(x, y, test_size=0.1, random_state=None)
 
@@ -94,7 +94,7 @@ def nb_confusion_matrix(dataset):
 
 
 def nb_roc_curve(dataset):
-    data = pd.read_csv(f"data/ICDS_{dataset}_Oversampled_Dataset.csv")
+    data = pd.read_csv(f"data/CRAP_{dataset}_Oversampled_Dataset.csv")
     x, y = preprocessing_columns(data)
     x_train, x_test, y_train, y_test = train_test_split(x, y, test_size=0.2, random_state=None)
 

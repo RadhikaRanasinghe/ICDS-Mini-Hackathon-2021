@@ -14,7 +14,7 @@ from sklearn.metrics import accuracy_score, classification_report
 def logisticRegression():
     highModel = 0
     highestAccuracy = 0
-    train_data = pd.read_csv("data/ICDS_ROS_Oversampled_Dataset.csv", sep=",")
+    train_data = pd.read_csv("data/CRAP_ROS_Oversampled_Dataset.csv", sep=",")
     X = train_data.drop("app_status", axis=1)
     y = train_data["app_status"]
 

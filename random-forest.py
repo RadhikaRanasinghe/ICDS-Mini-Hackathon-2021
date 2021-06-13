@@ -13,7 +13,7 @@ import matplotlib.pyplot as plt
 
 def run_random_forest():
     # Loading the dataset with a Pandas and the returned data frame is caught by data variable
-    data_frame = pd.read_csv("data/ICDS_ROS_Oversampled_Dataset.csv")
+    data_frame = pd.read_csv("data/CRAP _ROS_Oversampled_Dataset.csv")
     # cols_to_drop = ['ID']
     # data_frame = data_frame.drop(cols_to_drop, axis=1)
 

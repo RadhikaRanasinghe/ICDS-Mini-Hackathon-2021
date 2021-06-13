@@ -31,7 +31,6 @@ def create_Numeric(dataset_type):
                          1, 2, 3,  # social
                          1, 2, 3])  # health
 
-    # change the file to anything if needed :)
     new_df.to_csv(f"data/{dataset_type}_Numeric.csv", index=False)
 
 
