@@ -1,29 +1,28 @@
-import csv
-import numpy as np
-import pandas as pd
-import sklearn
 import pickle
-import sklearn.preprocessing
-import seaborn as sns
-import matplotlib.pyplot as plt
-from sklearn.model_selection import train_test_split
+
+import numpy as np
 from sklearn.linear_model import LogisticRegression
 from sklearn.metrics import accuracy_score, classification_report
+from sklearn.model_selection import train_test_split
+
+import dataset_handling
 
 
 def logisticRegression():
     highModel = 0
     highestAccuracy = 0
-    train_data = pd.read_csv("data/CRAP_ROS_Oversampled_Dataset.csv", sep=",")
-    X = train_data.drop("app_status", axis=1)
-    y = train_data["app_status"]
+
+    dataset_type = "CRAP_ROS"
+    X, y = dataset_handling.preprocessing_columns(dataset_type)
 
     X = np.array(X)
     y = np.array(y)
 
+    X_test, y_test = dataset_handling.preprocessing_columns("CRAP_test")
+
     for x in range(10000):
 
-        X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.1)
+        X_train, _, y_train, __ = train_test_split(X, y, test_size=0.1)
 
         model = LogisticRegression(solver='lbfgs', max_iter=20000)
 
@@ -36,25 +35,23 @@ def logisticRegression():
             highModel = model
             highestAccuracy = accuracy
             # creating and writing the accuracies to a log file
-            file = open("log.txt", "w")
-            file.write("Highest accuracy : " + str(highestAccuracy) + "\n")
+            file = open(f"notebooks/LogR_result_{dataset_type}.txt", "w")
+            file.write(classification_report(y_test, predictions) + "\nHighest accuracy : " + str(highestAccuracy))
             file.close()
         else:
             # if the current model accuracy is higher than the 3rd highest accuracy
             if accuracy > highestAccuracy:
                 highestAccuracy = accuracy
                 print("changed")
-                file = open("notebooks/ logistic regression log.txt", "a")
-                file.write("Highest accuracy : " + str(highestAccuracy) + "\n")
                 # if the current model accuracy is higher than the 2nd highest accuracy
                 highModel = model
+                file = open(f"notebooks/LogR_result_{dataset_type}.txt", "w")
+                file.write(classification_report(y_test, predictions) + "\nHighest accuracy : " + str(highestAccuracy))
                 file.close()
-                classificationreportFile = open("notebooks/logistic regression classification report.txt", "w")
-                classificationreportFile.write(classification_report(y_test, predictions))
         print("success")
 
     # saving the models as pickle files
-    with open('models/LogR_BestModel.pickle', 'wb') as handle:
+    with open(f'models/LogR_{dataset_type}.pickle', 'wb') as handle:
         pickle.dump(highModel, handle, protocol=pickle.HIGHEST_PROTOCOL)
         print('done')
 
