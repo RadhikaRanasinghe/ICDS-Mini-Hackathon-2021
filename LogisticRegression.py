@@ -42,13 +42,12 @@ def logisticRegression():
             # if the current model accuracy is higher than the 3rd highest accuracy
             if accuracy > highestAccuracy:
                 highestAccuracy = accuracy
-                print("changed")
+                print("changed the accuracy to", accuracy, "in the iteration:", x)
                 # if the current model accuracy is higher than the 2nd highest accuracy
                 highModel = model
                 file = open(f"notebooks/LogR_result_{dataset_type}.txt", "w")
                 file.write(classification_report(y_test, predictions) + "\nHighest accuracy : " + str(highestAccuracy))
                 file.close()
-        print("success")
 
     # saving the models as pickle files
     with open(f'models/LogR_{dataset_type}.pickle', 'wb') as handle:
