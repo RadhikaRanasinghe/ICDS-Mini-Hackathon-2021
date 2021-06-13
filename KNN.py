@@ -1,3 +1,4 @@
+import csv
 import pickle
 
 import matplotlib.pyplot as plt
@@ -18,12 +19,13 @@ def initialise_save(x, y, dataset_type):
     :param dataset_type: Type of the oversample dataset.
     :return: void
     """
+    x_test, y_test = dataset_handling.preprocessing_columns(dataset_type)
 
     for neighbors in range(3, 10, 2):
         for ts in range(1, 5, 1):
             test_size = ts / 10
 
-            x_train, x_test, y_train, y_test = sklearn.model_selection.train_test_split(x, y, test_size=test_size)
+            x_train, __, y_train, ___ = sklearn.model_selection.train_test_split(x, y, test_size=test_size)
             model = KNeighborsClassifier(n_neighbors=neighbors)
             model.fit(x_train, y_train)
 
@@ -42,6 +44,7 @@ def building_models(x, y, dataset_type):
     :param dataset_type: dataset oversample type.
     :return: void
     """
+    x_test, y_test = dataset_handling.preprocessing_columns(dataset_type)
 
     for neighbors in range(3, 10, 2):
         for ts in range(1, 5, 1):
@@ -51,7 +54,7 @@ def building_models(x, y, dataset_type):
                 test_size = ts / 10
 
                 # Splitting training and testing data.
-                x_train, x_test, y_train, y_test = sklearn.model_selection.train_test_split(x, y, test_size=test_size)
+                x_train, __, y_train, ___ = sklearn.model_selection.train_test_split(x, y, test_size=test_size)
                 # Initializing the model.
                 model = KNeighborsClassifier(n_neighbors=neighbors)
                 model.fit(x_train, y_train)
@@ -87,7 +90,7 @@ def print_results(dataset_type):
     """
 
     # Opening the md file to save results.
-    f = open(f"notebooks/KNN_results{dataset_type}.md", "w")
+    f = open(f"notebooks/KNN_results_{dataset_type}.md", "w")
     text = "## All Records\n" \
            "Neighbors | Test Size | Accuracy \n" \
            ":---------: | :---------: | :--------: \n"
@@ -107,7 +110,7 @@ def print_results(dataset_type):
             best_model = loaded_best_model.fit(loaded_best_data['x_train'], loaded_best_data['y_train'])
             best_acc = best_model.score(loaded_best_data['x_test'], loaded_best_data['y_test']) * 100
 
-            name = "### neighbors: " + str(neighbors) + ", test size: " + str(test_size / 10)
+            name = "### neighbors: " + str(neighbors) + ", test size: " + str(test_size)
             msg = "\n" + name + "\n\n\tBest\t\t: " + str(best_acc)
 
             print(msg.replace('#', ""))
@@ -119,7 +122,7 @@ def print_results(dataset_type):
                                 'report': sklearn.metrics.classification_report(loaded_best_data['y_test'],
                                                                                 predictions)}
 
-            text += str(neighbors) + " | " + str(test_size / 10) + " | " + str(best_acc) + " \n"
+            text += str(neighbors) + " | " + str(test_size) + " | " + str(best_acc) + " \n"
 
     # Showing the details of higest best acuracy model of all model.
     header += f"### The Highest Best\n\n>#{highest_best['name']}\n>> - **Best\t\t: {highest_best['best']}**\n"
@@ -130,16 +133,18 @@ def print_results(dataset_type):
     f.close()
 
 
-def plot_graphs(dataset_type):
+def find_best(dataset_type):
     """
-    Method to plot graphs related to best KNN model.
-    :param dataset_type: Type of the oversample dataset.
-    :return: void
+    Method to find the best model out of all KNN models.
+    :param dataset_type:
+    :return: best_model, best_data
     """
 
     best_model = None
     best_data = None
     best_accuracy = 0
+    neighborsG = None
+    test_sizeG = None
 
     # Reading all the save pickle files to find Best Model
     for neighbors in range(3, 10, 2):
@@ -163,6 +168,22 @@ def plot_graphs(dataset_type):
                 best_model = loaded_model
                 best_data = loaded_data
                 best_accuracy = accuracy
+                neighborsG = neighbors
+                test_sizeG = test_size
+
+    # Return best_model & best_data.
+    return best_model, best_data, (neighborsG, test_sizeG)
+
+
+def plot_graphs(dataset_type):
+    """
+    Method to plot graphs related to best KNN model.
+    :param dataset_type: Type of the oversample dataset.
+    :return: void
+    """
+
+    # Getting best model and best data to plot.
+    best_model, best_data, result = find_best(dataset_type)
 
     # Creating confusion matrix
     labels = ['negative', 'positive']
@@ -180,6 +201,10 @@ def plot_graphs(dataset_type):
     plt.plot([0, 1], [0, 1], color='darkorange', lw=2, linestyle='--')
     plt.savefig(f"plots/KNN/KNN_{dataset_type}_roc_curve.png")
 
+    f = open("plots/KNN/KNN_plot_details.txt", "w")
+    f.write(f"dataset: {dataset_type}\nneighbors: {result[0]}\ntest_size: {result[1]}")
+    f.close()
+
 
 def run_KNN(dataset_type):
     """
@@ -188,12 +213,46 @@ def run_KNN(dataset_type):
     :return: void
     """
 
-    # data = pd.read_csv(f"data/ICDS_{dataset_type}_Dataset.csv")
-    # x, y = dataset_handling.preprocessing_columns(data)
-    # initialise_save(x, y, dataset_type)
+    x, y = dataset_handling.preprocessing_columns(dataset_type)
+    initialise_save(x, y, dataset_type)
     # building_models(x, y, dataset_type)
     print_results(dataset_type)
     plot_graphs(dataset_type)
 
 
-run_KNN('ROS')
+def final_KNN():
+
+    best_model, best_data = find_best("ROS")
+    best_model.fit(best_data['x_train'], best_data['y_train'])
+
+    test_data = pd.read_csv("data/test_Numeric.csv")
+
+    id = list(test_data['ID'])
+    parents = list(test_data['parents'])
+    has_nurs = list(test_data['has_nurs'])
+    form = list(test_data['form'])
+    children = list(test_data['children'])
+    housing = list(test_data['housing'])
+    finance = list(test_data['finance'])
+    social = list(test_data['social'])
+    health = list(test_data['health'])
+
+    # Creating 'x' and 'y'
+    x_test = list(zip(parents, has_nurs, form, children, housing, finance, social, health))
+
+    predictions = list(best_model.predict(x_test))
+
+    headers = ['ID', 'app_status']
+    rows = []
+
+    for i in range(len(id)):
+        row = [id[i], int(predictions[i])]
+        rows.append(dict(zip(headers, row)))
+
+    filename = f"notebooks/TeamCRAP.csv"
+
+    with open(filename, 'w', newline="") as csvfile:
+        csvwriter = csv.DictWriter(csvfile, fieldnames=headers)
+        csvwriter.writeheader()
+        csvwriter.writerows(rows)
+
