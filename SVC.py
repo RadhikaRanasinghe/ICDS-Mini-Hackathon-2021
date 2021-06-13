@@ -13,7 +13,7 @@ def run_svc():
     # Loading the dataset with a Pandas and the returned data frame is caught by data variable
     x, y = dataset_handling.preprocessing_columns("CRAP_ROS")
 
-    initialize(x, y)
+    # initialize(x, y)
 
     highest_accuracy_save(x, y)
 
