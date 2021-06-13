@@ -66,7 +66,7 @@ def highest_accuracy_save(x, y):
 
         # Updating bestData and bestModel if the new accuracy is better.
         if acc > best_acc:
-            print("best saved", acc)
+            print("changed the accuracy to", acc, "in the iteration:", _)
             pickle.dump(model, open("models/Random_Forest/Random_Forest_Best_Model.pickle", "wb"))
             # Saving the training and testing data
             data = {'x_train': x_train, 'x_test': x_test, 'y_train': y_train, 'y_test': y_test}
