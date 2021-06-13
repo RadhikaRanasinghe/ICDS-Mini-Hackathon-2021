@@ -47,7 +47,7 @@ def highest_accuracy_save(x, y):
 
     for _ in range(10000):
         # Splitting the data into testing data and training data with the testing size of 0.3
-        x_train, __, y_train, ___ = train_test_split(x, y, test_size=0.3)
+        x_train, __, y_train, ___ = train_test_split(x, y, test_size=0.1)
 
         # The SVC Model is assigned to the model variable
         model = LinearSVC(max_iter=10000)
@@ -78,9 +78,10 @@ def writing():
 
     # Running predictions using  test data
     predictions = loaded_best_model.predict(loaded_best_data['x_test'])
+    acc = loaded_best_model.score(loaded_best_data['x_test'], loaded_best_data['y_test'])
 
     # Writing the classification report
-    text = classification_report(loaded_best_data['y_test'], predictions)
+    text = classification_report(loaded_best_data['y_test'], predictions) + "\nAccuracy score : " + str(acc)
     print(text)
 
     file = open("notebooks/SVC_Classification_Report.txt", "w")
