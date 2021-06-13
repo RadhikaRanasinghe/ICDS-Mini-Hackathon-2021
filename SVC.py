@@ -45,7 +45,7 @@ def initialize(x, y):
 def highest_accuracy_save(x, y):
     x_test, y_test = dataset_handling.preprocessing_columns("CRAP_test")
 
-    for _ in range(10):
+    for _ in range(10000):
         # Splitting the data into testing data and training data with the testing size of 0.3
         x_train, __, y_train, ___ = train_test_split(x, y, test_size=0.3)
 
