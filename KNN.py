@@ -123,7 +123,7 @@ def print_results(dataset_type):
 
     # Showing the details of higest best acuracy model of all model.
     header += f"### The Highest Best\n\n>#{highest_best['name']}\n>> - **Best\t\t: {highest_best['best']}**\n"
-    header += highest_best["report"].replace("\n", "\n\t") + "\n\n"
+    header += "\n\t" + highest_best["report"].replace("\n", "\n\t") + "\n\n"
 
     # saving to the file.
     f.write(header + text)
@@ -188,10 +188,10 @@ def run_KNN(dataset_type):
     :return: void
     """
 
-    data = pd.read_csv(f"data/ICDS_{dataset_type}_Dataset.csv")
-    x, y = dataset_handling.preprocessing_columns(data)
+    # data = pd.read_csv(f"data/ICDS_{dataset_type}_Dataset.csv")
+    # x, y = dataset_handling.preprocessing_columns(data)
     # initialise_save(x, y, dataset_type)
-    building_models(x, y, dataset_type)
+    # building_models(x, y, dataset_type)
     print_results(dataset_type)
     plot_graphs(dataset_type)
 
