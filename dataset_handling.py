@@ -2,12 +2,13 @@ import csv
 from collections import Counter
 
 import pandas as pd
+import sklearn
 from imblearn.over_sampling import ADASYN, RandomOverSampler
 from imblearn.under_sampling import RepeatedEditedNearestNeighbours
 
 
-def create_Numeric():
-    file_handler = open("data/train_data.csv", "r")
+def create_Numeric(dataset_type):
+    file_handler = open(f"data/{dataset_type}_data.csv", "r")
     data = pd.read_csv(file_handler, sep=",")
     df = pd.DataFrame(data)  # define dataframe
     file_handler.close()
@@ -31,11 +32,20 @@ def create_Numeric():
                          1, 2, 3])  # health
 
     # change the file to anything if needed :)
-    new_df.to_csv("data/ICDS_Numeric_Dataset.csv", index=False)
+    new_df.to_csv(f"data/{dataset_type}_Numeric.csv", index=False)
+
+
+def create_test_train():
+    x, y = preprocessing_columns("train_Numeric")
+
+    x_train, x_test, y_train, y_test = sklearn.model_selection.train_test_split(x, y, test_size=0.1)
+
+    write_data(x_train, y_train, "CRAP_train")
+    write_data(x_test, y_test, "CRAP_test")
 
 
 def preprocessing_columns(dataset_type):
-    data = pd.read_csv(f'data/ICDS_{dataset_type}_Dataset.csv')
+    data = pd.read_csv(f'data/{dataset_type}.csv')
 
     parents = list(data['parents'])
     has_nurs = list(data['has_nurs'])
@@ -64,25 +74,25 @@ def write_data(x, y, dataset_type):
         row.append(int(y[i]))
         rows.append(dict(zip(headers, row)))
 
-    filename = f"data/ICDS_{dataset_type}_Dataset.csv"
+    filename = f"data/{dataset_type}.csv"
 
-    with open(filename, 'w') as csvfile:
+    with open(filename, 'w', newline="") as csvfile:
         csvwriter = csv.DictWriter(csvfile, fieldnames=headers)
         csvwriter.writeheader()
         csvwriter.writerows(rows)
 
 
 def create_oversample():
-    x, y = preprocessing_columns("Numeric")
+    x, y = preprocessing_columns("CRAP_train")
 
     # ADASYN
-    dataset_type = "ADASYN"
+    dataset_type = "CRAP_ADASYN"
     x_resampled, y_resampled = ADASYN().fit_resample(x, y)
     print(dataset_type, sorted(Counter(y_resampled).items()))
     write_data(x_resampled, y_resampled, dataset_type)
 
     # ROS
-    dataset_type = "ROS"
+    dataset_type = "CRAP_ROS"
     ros = RandomOverSampler()
     x_resampled, y_resampled = ros.fit_resample(x, y)
     print(dataset_type, sorted(Counter(y_resampled).items()))
@@ -90,9 +100,9 @@ def create_oversample():
 
 
 def create_undersample():
-    x, y = preprocessing_columns("Numeric")
+    x, y = preprocessing_columns("CRAP_train")
 
-    dataset_type = "RENN"
+    dataset_type = "CRAP_RENN"
     renn = RepeatedEditedNearestNeighbours()
     X_resampled, y_resampled = renn.fit_resample(x, y)
     print(dataset_type, sorted(Counter(y_resampled).items()))
