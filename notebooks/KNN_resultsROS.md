@@ -6,7 +6,8 @@
 
 >#### neighbors: 9, test size: 0.01
 >> - **Best		: 95.8924570575056**
-              precision    recall  f1-score   support
+
+	              precision    recall  f1-score   support
 	
 	           0       0.98      0.93      0.96       672
 	           1       0.94      0.98      0.96       667
