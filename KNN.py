@@ -215,7 +215,7 @@ def run_KNN(dataset_type):
     """
 
     x, y = dataset_handling.preprocessing_columns(dataset_type)
-    # initialise_save(x, y, dataset_type)
+    initialise_save(x, y, dataset_type)
     building_models(x, y, dataset_type)
     print_results(dataset_type)
     plot_graphs(dataset_type)
