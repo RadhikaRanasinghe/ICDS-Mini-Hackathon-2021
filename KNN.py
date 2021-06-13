@@ -19,7 +19,7 @@ def initialise_save(x, y, dataset_type):
     :param dataset_type: Type of the oversample dataset.
     :return: void
     """
-    x_test, y_test = dataset_handling.preprocessing_columns(dataset_type)
+    x_test, y_test = dataset_handling.preprocessing_columns("CRAP_test")
 
     for neighbors in range(3, 10, 2):
         for ts in range(1, 5, 1):
@@ -44,7 +44,8 @@ def building_models(x, y, dataset_type):
     :param dataset_type: dataset oversample type.
     :return: void
     """
-    x_test, y_test = dataset_handling.preprocessing_columns(dataset_type)
+
+    x_test, y_test = dataset_handling.preprocessing_columns("CRAP_test")
 
     for neighbors in range(3, 10, 2):
         for ts in range(1, 5, 1):
