@@ -60,7 +60,7 @@ def train_voting_classifier():
     # getting accuracy as percentage
     text = classification_report(best_y_test, predictions) + f"\nVotingClassifier accuracy: {best_accuracy}"
 
-    file = open(f"plots/voting_classifier_report.txt", "w")
+    file = open(f"notebooks/voting_classifier_report.txt", "w")
     file.write(text)
     file.close()
 
