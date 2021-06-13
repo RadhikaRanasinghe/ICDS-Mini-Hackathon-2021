@@ -19,5 +19,5 @@ create_undersample()
 # Running KNN.
 run_KNN("CRAP_ROS")
 
-# Creating submition file.
+# Creating submission file.
 final_KNN()
