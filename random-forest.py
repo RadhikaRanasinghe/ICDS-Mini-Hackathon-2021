@@ -97,7 +97,7 @@ def writing():
         disp = plot_confusion_matrix(loaded_best_model, loaded_best_data['x_test'], loaded_best_data['y_test'],
                                      display_labels=labels, cmap=plt.cm.Blues, normalize=normalize)
         disp.ax_.set_title(title)
-        plt.savefig(f"plots/{title}.png".replace(" ", "_").replace(",", ""))
+        plt.savefig(f"plots/RF/{title}.png".replace(" ", "_").replace(",", ""))
 
 
 run_random_forest()
