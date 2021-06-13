@@ -31,11 +31,11 @@ def create_Numeric():
                          1, 2, 3])  # health
 
     # change the file to anything if needed :)
-    new_df.to_csv("data/ICDS_Numeric_Dataset.csv", index=False)
+    new_df.to_csv("data/CRAP_Numeric_Dataset.csv", index=False)
 
 
 def preprocessing_columns(dataset_type):
-    data = pd.read_csv(f'data/ICDS_{dataset_type}_Dataset.csv')
+    data = pd.read_csv(f'data/CRAP_{dataset_type}_Dataset.csv')
 
     parents = list(data['parents'])
     has_nurs = list(data['has_nurs'])
@@ -64,7 +64,7 @@ def write_data(x, y, dataset_type):
         row.append(int(y[i]))
         rows.append(dict(zip(headers, row)))
 
-    filename = f"data/ICDS_{dataset_type}_Dataset.csv"
+    filename = f"data/CRAP_{dataset_type}_Dataset.csv"
 
     with open(filename, 'w') as csvfile:
         csvwriter = csv.DictWriter(csvfile, fieldnames=headers)
